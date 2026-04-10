@@ -1,0 +1,104 @@
+================================================================================
+DASHBOARD ZOLVEX - INICIO RAPIDO
+================================================================================
+
+CONFIGURACION EN 5 PASOS (15 MINUTOS)
+================================================================================
+
+1. TEST DE CONEXION (2 min)
+   --------------------------
+   python test_conexion.py
+
+   ✓ Debe mostrar: "TEST EXITOSO"
+
+
+2. GENERAR DASHBOARD (3 min)
+   --------------------------
+   python generar_dashboard.py
+
+   ✓ Crea archivo: index.html
+   ✓ Tamaño esperado: ~200-300 KB
+
+
+3. SUBIR A GITHUB (5 min)
+   --------------------------
+   git add .
+   git commit -m "Dashboard inicial ZOLVEX"
+   git push origin main
+
+   ✓ Verificar en: https://github.com/sofiarodriguez-png/dashboard-zolvex
+
+
+4. ACTIVAR GITHUB PAGES (2 min)
+   --------------------------
+   - Ir a Settings > Pages
+   - Source: main branch
+   - Save
+
+   ✓ URL: https://sofiarodriguez-png.github.io/dashboard-zolvex/
+
+
+5. CONFIGURAR AUTO-ACTUALIZACION (3 min)
+   --------------------------
+   - Click derecho en: EJECUTAR_CONFIGURACION.bat
+   - "Ejecutar como administrador"
+
+   ✓ Horarios: 10:00, 14:00, 18:00, 04:00
+
+================================================================================
+VERIFICACION RAPIDA
+================================================================================
+
+□ Dashboard visible en: https://sofiarodriguez-png.github.io/dashboard-zolvex/
+□ Título: "Dashboard ZOLVEX - Consumer MLA"
+□ Filtros: Periodo, Producto, Segmento, Criterio
+□ 8 KPIs visibles
+□ 3 tablas con datos
+□ 2 gráficos funcionando
+□ Tarea programada activa en Windows
+
+================================================================================
+CARACTERISTICAS PRINCIPALES
+================================================================================
+
+DATOS:
+- Origen: BigQuery (TLV_CONSUMER_BASE_KPIS_FINAL)
+- Filtro: MLA + ZOLVEX + Consumer
+- Periodo: Ultimos 6 meses
+
+ACTUALIZACION:
+- Automatica: 4 veces al dia (10h, 14h, 18h, 04h)
+- Manual: Ejecutar actualizar_dashboard.bat
+
+FILTROS:
+- Periodo (mes)
+- Producto (PL, BNPL, DINERO_PLUS, FASTCHAT)
+- Segmento (REPEATS, ACTIVATION, CHECKDROP)
+- Criterio (busqueda multiple)
+
+METRICAS:
+- Clientes Asignados
+- Cobertura Total y CPC
+- Gestiones por Usuario
+- % Clientes Originados
+- % Monto Originacion
+- % Clientes VTA
+- Monto Atribuido VTA
+- Metricas Voice Bot
+
+================================================================================
+SOPORTE
+================================================================================
+
+DOCUMENTACION COMPLETA:
+- README.md (documentacion principal)
+- INSTRUCCIONES.txt (guia detallada)
+- CHECKLIST.md (lista de verificacion)
+- RESUMEN_PROYECTO.md (vision general)
+
+PROBLEMAS COMUNES:
+1. Error BigQuery → Verificar credenciales
+2. Error Git → Verificar configuracion git
+3. Tarea no ejecuta → Verificar permisos administrador
+
+================================================================================

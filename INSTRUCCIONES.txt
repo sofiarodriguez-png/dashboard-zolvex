@@ -1,0 +1,92 @@
+================================================================================
+DASHBOARD ZOLVEX - INSTRUCCIONES DE CONFIGURACION
+================================================================================
+
+Este dashboard muestra las metricas de ZOLVEX Consumer MLA con actualizacion
+automatica 4 veces al dia (10:00, 14:00, 18:00, 04:00).
+
+================================================================================
+CONFIGURACION INICIAL (SOLO UNA VEZ)
+================================================================================
+
+1. GENERAR EL DASHBOARD POR PRIMERA VEZ
+   ---------------------------------------
+   - Abrir terminal/CMD en esta carpeta
+   - Ejecutar: python generar_dashboard.py
+   - Esto creara el archivo index.html
+
+2. SUBIR A GITHUB
+   ---------------------------------------
+   - git add .
+   - git commit -m "Dashboard inicial ZOLVEX"
+   - git push origin main
+
+3. CONFIGURAR GITHUB PAGES
+   ---------------------------------------
+   - Ir a: https://github.com/sofiarodriguez-png/dashboard-zolvex
+   - Settings > Pages
+   - Source: main branch
+   - Save
+   - El dashboard estara en: https://sofiarodriguez-png.github.io/dashboard-zolvex/
+
+4. CONFIGURAR ACTUALIZACION AUTOMATICA
+   ---------------------------------------
+   - Click derecho en EJECUTAR_CONFIGURACION.bat
+   - "Ejecutar como administrador"
+   - Seguir las instrucciones
+   - Esto configura la tarea programada en Windows
+
+================================================================================
+USO DIARIO
+================================================================================
+
+Una vez configurado, el dashboard se actualizara automaticamente.
+
+Para actualizar manualmente:
+   - Doble click en: actualizar_dashboard.bat
+
+Para ver el dashboard:
+   - https://sofiarodriguez-png.github.io/dashboard-zolvex/
+
+================================================================================
+VERIFICAR TAREA PROGRAMADA
+================================================================================
+
+Windows: Buscar "Programador de tareas" > Buscar "Dashboard_ZOLVEX_AutoUpdate"
+
+================================================================================
+ARCHIVOS DEL PROYECTO
+================================================================================
+
+generar_dashboard.py              - Script principal (consulta BigQuery)
+actualizar_dashboard.py           - Script de actualizacion automatica
+actualizar_dashboard.bat          - Ejecutor del script de actualizacion
+tarea_programada.xml              - Configuracion de horarios (10, 14, 18, 04)
+configurar_tarea_programada.ps1   - Configurador de la tarea de Windows
+EJECUTAR_CONFIGURACION.bat       - Ejecutor del configurador (como admin)
+README.md                         - Documentacion completa
+index.html                        - Dashboard generado (auto-actualizado)
+
+================================================================================
+DATOS
+================================================================================
+
+Tabla: meli-bi-data.SBOX_COLLECTIONSDA.TLV_CONSUMER_BASE_KPIS_FINAL
+Filtros:
+  - SIT_SITE_ID = 'MLA' (solo Argentina)
+  - COL_LAST_CALL_CENTER_ASSIGNED = 'ZOLVEX'
+  - LISTA_GESTION = 1
+
+Ultimos 6 meses de datos
+
+================================================================================
+SOPORTE
+================================================================================
+
+Si hay problemas:
+1. Verificar conexion a BigQuery
+2. Verificar que git esta configurado
+3. Verificar permisos de escritura en la carpeta
+4. Revisar los logs de la tarea programada en Windows
+
+================================================================================

@@ -1,0 +1,167 @@
+================================================================================
+DASHBOARD ZOLVEX - CONSUMER MLA
+================================================================================
+
+¡BIENVENIDO! Este proyecto contiene todo lo necesario para el Dashboard ZOLVEX.
+
+================================================================================
+ESTADO DEL PROYECTO
+================================================================================
+
+✓ 14 archivos creados exitosamente
+✓ 205 KB de código y documentación
+✓ Listo para usar
+
+================================================================================
+INICIO RAPIDO
+================================================================================
+
+Para configurar el dashboard en 15 minutos, lee:
+
+    → INICIO_RAPIDO.txt
+
+================================================================================
+DOCUMENTACION DISPONIBLE
+================================================================================
+
+1. INICIO_RAPIDO.txt
+   └─ Configuración en 5 pasos (15 min)
+   └─ Para empezar YA
+
+2. INSTRUCCIONES.txt
+   └─ Guía completa paso a paso
+   └─ Configuración inicial detallada
+
+3. CHECKLIST.md
+   └─ Lista de verificación completa
+   └─ 7 pasos con checkboxes
+   └─ Solución de problemas
+
+4. README.md
+   └─ Documentación principal
+   └─ Métricas, filtros, gráficos
+
+5. RESUMEN_PROYECTO.md
+   └─ Visión general completa
+   └─ Arquitectura y tecnologías
+
+6. ARCHIVOS_CREADOS.md
+   └─ Descripción de cada archivo
+   └─ Estadísticas del proyecto
+
+================================================================================
+ARCHIVOS PRINCIPALES
+================================================================================
+
+SCRIPTS:
+  generar_dashboard.py           - Script principal (consulta BigQuery)
+  actualizar_dashboard.py        - Automatización de actualización
+  test_conexion.py               - Test de conexión a BigQuery
+
+EJECUTORES:
+  actualizar_dashboard.bat       - Ejecuta actualización manual
+  EJECUTAR_CONFIGURACION.bat     - Configura tarea programada (ADMIN)
+
+CONFIGURACION:
+  tarea_programada.xml           - Horarios (10:00, 14:00, 18:00, 04:00)
+  configurar_tarea_programada.ps1 - Script de configuración
+
+================================================================================
+PRIMEROS PASOS
+================================================================================
+
+1. Lee INICIO_RAPIDO.txt (2 minutos)
+
+2. Ejecuta el test:
+   python test_conexion.py
+
+3. Genera el dashboard:
+   python generar_dashboard.py
+
+4. Sube a GitHub:
+   git add .
+   git commit -m "Dashboard inicial"
+   git push origin main
+
+5. Activa GitHub Pages:
+   Settings > Pages > main branch
+
+6. Configura auto-actualización:
+   Click derecho EJECUTAR_CONFIGURACION.bat > "Como administrador"
+
+================================================================================
+CARACTERISTICAS
+================================================================================
+
+DATOS:
+  - Origen: BigQuery TLV_CONSUMER_BASE_KPIS_FINAL
+  - Solo: MLA + ZOLVEX + Consumer
+  - Periodo: Últimos 6 meses
+
+METRICAS:
+  - 8 KPIs principales
+  - 3 tablas de evolución
+  - 2 gráficos interactivos
+  - Métricas Voice Bot
+
+FILTROS:
+  - Periodo (mes)
+  - Producto (PL, BNPL, DINERO_PLUS, FASTCHAT)
+  - Segmento (REPEATS, ACTIVATION, CHECKDROP)
+  - Criterio (búsqueda múltiple)
+
+ACTUALIZACION:
+  - Automática: 4 veces/día (10, 14, 18, 04)
+  - Manual: actualizar_dashboard.bat
+
+================================================================================
+URL DEL DASHBOARD
+================================================================================
+
+Una vez configurado:
+
+    https://sofiarodriguez-png.github.io/dashboard-zolvex/
+
+================================================================================
+SOPORTE
+================================================================================
+
+¿Problemas?
+  1. Lee CHECKLIST.md > "Solución de Problemas"
+  2. Verifica test_conexion.py
+  3. Revisa INSTRUCCIONES.txt
+
+¿Dudas sobre el código?
+  - Lee ARCHIVOS_CREADOS.md
+  - Cada archivo está documentado
+
+================================================================================
+DIFERENCIA CON GEDCO
+================================================================================
+
+ZOLVEX:                          GEDCO:
+  ✓ Solo MLA                       ✓ MLA + MLM
+  ✓ Solo Consumer                  ✓ Consumer + Merchant
+  ✓ Solo ZOLVEX                    ✓ GEDCO, GEDCO_MLM
+  ✓ Sin filtro país                ✓ Con filtro país
+  ✓ 4 actualizaciones/día          ✓ 4 actualizaciones/día
+
+================================================================================
+PROXIMOS PASOS
+================================================================================
+
+□ Leer INICIO_RAPIDO.txt
+□ Ejecutar test_conexion.py
+□ Generar dashboard inicial
+□ Subir a GitHub
+□ Activar GitHub Pages
+□ Configurar tarea programada
+□ Verificar primera actualización
+
+================================================================================
+
+Para empezar ahora mismo, abre:
+
+  → INICIO_RAPIDO.txt
+
+================================================================================
