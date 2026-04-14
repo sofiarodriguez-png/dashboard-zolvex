@@ -468,7 +468,7 @@
         <div class="header">
             <h1>Dashboard ZOLVEX - Consumer MLA</h1>
             <div class="header-meta">
-                Actualizado: 2026-04-14 11:07:33 |
+                Actualizado: 2026-04-14 11:14:05 |
                 Registros: 2 |
                 Filtro: MLA + zolvex_mla
             </div>
@@ -616,14 +616,28 @@
         </div>
 
         <div class="graficos-section" style="padding-top: 0;">
-            <h2 class="section-title">Ticket Promedio - Evolución</h2>
-            <div class="chart-container">
-                <canvas id="chartTicketPromedio"></canvas>
-            </div>
-            <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 14px;">
-                <strong>📊 Cómo se calcula:</strong><br>
-                • <strong>Ticket Promedio Total:</strong> Monto Total Originado ÷ Clientes que Originaron<br>
-                • <strong>Ticket Promedio VTA:</strong> Monto Originado VTA ÷ Clientes que Originaron VTA
+            <h2 class="section-title">💰 Ticket Promedio - Evolución</h2>
+            <div style="max-width: 1000px; margin: 0 auto; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <div style="height: 350px; position: relative;">
+                    <canvas id="chartTicketPromedio"></canvas>
+                </div>
+                <div style="margin-top: 20px; padding: 18px; background: white; border-radius: 8px; border-left: 4px solid #2196F3; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-size: 13px; color: #555; line-height: 1.8;">
+                        <strong style="color: #333; font-size: 14px;">📊 Definiciones:</strong><br>
+                        <div style="margin-top: 8px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #2196F3; border-radius: 2px; margin-right: 8px;"></span>
+                            <strong>Ticket Promedio Total:</strong> Monto Total Originado ÷ Usuarios que Originaron
+                        </div>
+                        <div style="margin-top: 6px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #FF7A00; border-radius: 2px; margin-right: 8px;"></span>
+                            <strong>Ticket Promedio VTA (Usuario):</strong> Monto Originado VTA ÷ Usuarios que Originaron VTA
+                        </div>
+                        <div style="margin-top: 6px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #4CAF50; border-radius: 2px; margin-right: 8px;"></span>
+                            <strong>Ticket Promedio Atribución VTA:</strong> Monto Total VTA ÷ Usuarios que Originaron VTA
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1512,12 +1526,14 @@
                         montoTotal: 0,
                         usuariosTotal: 0,
                         montoVTA: 0,
+                        montoTotalVTA: 0,
                         usuariosVTA: 0
                     };
                 }
                 datosPorPeriodo[d.periodo].montoTotal += d.monto_originado_total;
                 datosPorPeriodo[d.periodo].usuariosTotal += d.usuarios_originaron;
                 datosPorPeriodo[d.periodo].montoVTA += d.monto_originado_vta;
+                datosPorPeriodo[d.periodo].montoTotalVTA += d.monto_total_vta;
                 datosPorPeriodo[d.periodo].usuariosVTA += d.usuarios_originaron_vta;
             });
 
@@ -1537,6 +1553,11 @@
                 return datos.usuariosVTA > 0 ? (datos.montoVTA / datos.usuariosVTA).toFixed(2) : 0;
             });
 
+            const ticketPromedioAtribucionVTA = periodos.map(p => {
+                const datos = datosPorPeriodo[p];
+                return datos.usuariosVTA > 0 ? (datos.montoTotalVTA / datos.usuariosVTA).toFixed(2) : 0;
+            });
+
             if (chartTicketPromedio) {
                 chartTicketPromedio.destroy();
             }
@@ -1551,29 +1572,62 @@
                             label: 'Ticket Promedio Total',
                             data: ticketPromedioTotal,
                             borderColor: '#2196F3',
-                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            backgroundColor: 'rgba(33, 150, 243, 0.08)',
                             tension: 0.4,
                             fill: true,
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            borderWidth: 3
+                            pointRadius: 7,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: '#2196F3',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointHoverBackgroundColor: '#2196F3',
+                            pointHoverBorderColor: '#fff',
+                            borderWidth: 3,
+                            order: 1
                         },
                         {
-                            label: 'Ticket Promedio VTA',
+                            label: 'Ticket Promedio VTA (Usuario)',
                             data: ticketPromedioVTA,
                             borderColor: '#FF7A00',
-                            backgroundColor: 'rgba(255, 122, 0, 0.1)',
+                            backgroundColor: 'rgba(255, 122, 0, 0.08)',
                             tension: 0.4,
                             fill: true,
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            borderWidth: 3
+                            pointRadius: 7,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: '#FF7A00',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointHoverBackgroundColor: '#FF7A00',
+                            pointHoverBorderColor: '#fff',
+                            borderWidth: 3,
+                            order: 2
+                        },
+                        {
+                            label: 'Ticket Promedio Atribución VTA',
+                            data: ticketPromedioAtribucionVTA,
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.08)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 7,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: '#4CAF50',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointHoverBackgroundColor: '#4CAF50',
+                            pointHoverBorderColor: '#fff',
+                            borderWidth: 3,
+                            order: 3
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
                     plugins: {
                         legend: {
                             display: true,
@@ -1581,45 +1635,81 @@
                             labels: {
                                 font: {
                                     size: 13,
-                                    weight: 'bold'
+                                    weight: 'bold',
+                                    family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
                                 },
-                                padding: 15
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                boxWidth: 8,
+                                boxHeight: 8
                             }
                         },
                         tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#ddd',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            titleFont: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
                             callbacks: {
                                 label: function(context) {
                                     const value = parseFloat(context.parsed.y).toLocaleString('es-AR', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 0
                                     });
-                                    return context.dataset.label + ': $' + value;
+                                    return ' ' + context.dataset.label + ': $' + value;
                                 }
                             }
                         }
                     },
                     layout: {
                         padding: {
-                            top: 30
+                            top: 35,
+                            bottom: 10
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
                             ticks: {
                                 callback: function(value) {
-                                    return '$' + value.toLocaleString('es-AR');
+                                    return '$' + (value / 1000).toFixed(0) + 'K';
                                 },
                                 font: {
-                                    size: 11
-                                }
+                                    size: 12,
+                                    family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                                },
+                                color: '#666',
+                                padding: 8
                             }
                         },
                         x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.03)',
+                                drawBorder: false
+                            },
                             ticks: {
                                 font: {
-                                    size: 11
-                                }
+                                    size: 12,
+                                    weight: '600',
+                                    family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                                },
+                                color: '#555',
+                                padding: 8
                             }
                         }
                     }
@@ -1631,16 +1721,37 @@
                             const meta = chart.getDatasetMeta(i);
                             if (!meta.hidden) {
                                 meta.data.forEach((element, index) => {
-                                    ctx.fillStyle = dataset.borderColor;
-                                    ctx.font = 'bold 11px Arial';
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'bottom';
                                     const data = dataset.data[index];
-                                    const formattedValue = parseFloat(data).toLocaleString('es-AR', {
-                                        minimumFractionDigits: 0,
-                                        maximumFractionDigits: 0
-                                    });
-                                    ctx.fillText('$' + formattedValue, element.x, element.y - 8);
+                                    if (data && data > 0) {
+                                        // Fondo blanco para el texto
+                                        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                                        ctx.strokeStyle = dataset.borderColor;
+                                        ctx.lineWidth = 2;
+
+                                        const formattedValue = (parseFloat(data) / 1000).toFixed(0) + 'K';
+                                        const text = '$' + formattedValue;
+
+                                        ctx.font = 'bold 11px "Segoe UI", Arial, sans-serif';
+                                        const textWidth = ctx.measureText(text).width;
+                                        const padding = 6;
+
+                                        const boxX = element.x - (textWidth / 2) - padding;
+                                        const boxY = element.y - 28;
+                                        const boxWidth = textWidth + (padding * 2);
+                                        const boxHeight = 18;
+
+                                        // Dibujar fondo redondeado
+                                        ctx.beginPath();
+                                        ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 4);
+                                        ctx.fill();
+                                        ctx.stroke();
+
+                                        // Dibujar texto
+                                        ctx.fillStyle = dataset.borderColor;
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.fillText(text, element.x, element.y - 19);
+                                    }
                                 });
                             }
                         });
