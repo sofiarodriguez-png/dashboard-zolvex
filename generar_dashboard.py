@@ -760,6 +760,18 @@ html_content = f"""
                 <canvas id="chartMontoAtribuido"></canvas>
             </div>
         </div>
+
+        <div class="graficos-section" style="padding-top: 0;">
+            <h2 class="section-title">Ticket Promedio - Evolución</h2>
+            <div class="chart-container">
+                <canvas id="chartTicketPromedio"></canvas>
+            </div>
+            <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 14px;">
+                <strong>📊 Cómo se calcula:</strong><br>
+                • <strong>Ticket Promedio Total:</strong> Monto Total Originado ÷ Clientes que Originaron<br>
+                • <strong>Ticket Promedio VTA:</strong> Monto Originado VTA ÷ Clientes que Originaron VTA
+            </div>
+        </div>
     </div>
 
     <!-- Modal de Definiciones -->
@@ -841,6 +853,7 @@ html_content = f"""
         let periodoSeleccionado = {ultimo_periodo};
         let chartMontoAtribuido = null;
         let chartCoberturas = null;
+        let chartTicketPromedio = null;
 
         function mostrarDefiniciones() {{
             document.getElementById('modalDefiniciones').classList.add('show');
@@ -1038,6 +1051,7 @@ html_content = f"""
             actualizarTablaVoiceBot();
             actualizarGraficoCoberturas();
             actualizarGraficoMontoAtribuido();
+            actualizarGraficoTicketPromedio();
         }}
 
         function resetFiltros() {{
@@ -1633,6 +1647,154 @@ html_content = f"""
             }});
         }}
 
+        function actualizarGraficoTicketPromedio() {{
+            const datos = filtrarDatos();
+
+            // Agrupar por periodo
+            const datosPorPeriodo = {{}};
+            datos.forEach(d => {{
+                if (!datosPorPeriodo[d.periodo]) {{
+                    datosPorPeriodo[d.periodo] = {{
+                        montoTotal: 0,
+                        usuariosTotal: 0,
+                        montoVTA: 0,
+                        usuariosVTA: 0
+                    }};
+                }}
+                datosPorPeriodo[d.periodo].montoTotal += d.monto_originado_total;
+                datosPorPeriodo[d.periodo].usuariosTotal += d.usuarios_originaron;
+                datosPorPeriodo[d.periodo].montoVTA += d.monto_originado_vta;
+                datosPorPeriodo[d.periodo].usuariosVTA += d.usuarios_originaron_vta;
+            }});
+
+            const periodos = Object.keys(datosPorPeriodo).sort();
+            const labels = periodos.map(p => {{
+                const label = periodosDisponibles.find(x => x.value === parseInt(p))?.label || p;
+                return label;
+            }});
+
+            const ticketPromedioTotal = periodos.map(p => {{
+                const datos = datosPorPeriodo[p];
+                return datos.usuariosTotal > 0 ? (datos.montoTotal / datos.usuariosTotal).toFixed(2) : 0;
+            }});
+
+            const ticketPromedioVTA = periodos.map(p => {{
+                const datos = datosPorPeriodo[p];
+                return datos.usuariosVTA > 0 ? (datos.montoVTA / datos.usuariosVTA).toFixed(2) : 0;
+            }});
+
+            if (chartTicketPromedio) {{
+                chartTicketPromedio.destroy();
+            }}
+
+            const ctx = document.getElementById('chartTicketPromedio').getContext('2d');
+            chartTicketPromedio = new Chart(ctx, {{
+                type: 'line',
+                data: {{
+                    labels: labels,
+                    datasets: [
+                        {{
+                            label: 'Ticket Promedio Total',
+                            data: ticketPromedioTotal,
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            borderWidth: 3
+                        }},
+                        {{
+                            label: 'Ticket Promedio VTA',
+                            data: ticketPromedioVTA,
+                            borderColor: '#FF7A00',
+                            backgroundColor: 'rgba(255, 122, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            borderWidth: 3
+                        }}
+                    ]
+                }},
+                options: {{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {{
+                        legend: {{
+                            display: true,
+                            position: 'top',
+                            labels: {{
+                                font: {{
+                                    size: 13,
+                                    weight: 'bold'
+                                }},
+                                padding: 15
+                            }}
+                        }},
+                        tooltip: {{
+                            callbacks: {{
+                                label: function(context) {{
+                                    const value = parseFloat(context.parsed.y).toLocaleString('es-AR', {{
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }});
+                                    return context.dataset.label + ': $' + value;
+                                }}
+                            }}
+                        }}
+                    }},
+                    layout: {{
+                        padding: {{
+                            top: 30
+                        }}
+                    }},
+                    scales: {{
+                        y: {{
+                            beginAtZero: true,
+                            ticks: {{
+                                callback: function(value) {{
+                                    return '$' + value.toLocaleString('es-AR');
+                                }},
+                                font: {{
+                                    size: 11
+                                }}
+                            }}
+                        }},
+                        x: {{
+                            ticks: {{
+                                font: {{
+                                    size: 11
+                                }}
+                            }}
+                        }}
+                    }}
+                }},
+                plugins: [{{
+                    afterDatasetsDraw: function(chart) {{
+                        const ctx = chart.ctx;
+                        chart.data.datasets.forEach((dataset, i) => {{
+                            const meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {{
+                                meta.data.forEach((element, index) => {{
+                                    ctx.fillStyle = dataset.borderColor;
+                                    ctx.font = 'bold 11px Arial';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'bottom';
+                                    const data = dataset.data[index];
+                                    const formattedValue = parseFloat(data).toLocaleString('es-AR', {{
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 0
+                                    }});
+                                    ctx.fillText('$' + formattedValue, element.x, element.y - 8);
+                                }});
+                            }}
+                        }});
+                    }}
+                }}]
+            }});
+        }}
+
         inicializarFiltros();
         actualizarKPIs();
         actualizarTablaComparativa();
@@ -1640,6 +1802,7 @@ html_content = f"""
         actualizarTablaVoiceBot();
         actualizarGraficoCoberturas();
         actualizarGraficoMontoAtribuido();
+        actualizarGraficoTicketPromedio();
     </script>
 </body>
 </html>

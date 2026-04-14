@@ -468,7 +468,7 @@
         <div class="header">
             <h1>Dashboard ZOLVEX - Consumer MLA</h1>
             <div class="header-meta">
-                Actualizado: 2026-04-13 14:00:16 |
+                Actualizado: 2026-04-14 11:07:33 |
                 Registros: 2 |
                 Filtro: MLA + zolvex_mla
             </div>
@@ -614,6 +614,18 @@
                 <canvas id="chartMontoAtribuido"></canvas>
             </div>
         </div>
+
+        <div class="graficos-section" style="padding-top: 0;">
+            <h2 class="section-title">Ticket Promedio - Evolución</h2>
+            <div class="chart-container">
+                <canvas id="chartTicketPromedio"></canvas>
+            </div>
+            <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 14px;">
+                <strong>📊 Cómo se calcula:</strong><br>
+                • <strong>Ticket Promedio Total:</strong> Monto Total Originado ÷ Clientes que Originaron<br>
+                • <strong>Ticket Promedio VTA:</strong> Monto Originado VTA ÷ Clientes que Originaron VTA
+            </div>
+        </div>
     </div>
 
     <!-- Modal de Definiciones -->
@@ -688,13 +700,14 @@
     </div>
 
     <script>
-        const datosCompletos = [{"pais": "MLA", "periodo": 202603, "agencia": "zolvex_mla", "criterio": "mla | consumer", "tipo_producto": "OTRO", "tipo_segmento": "OTRO", "clientes_asignados": 76928, "clientes_con_gestion": 76053, "clientes_con_cpc": 19864, "clientes_con_opt": 127, "gestiones_totales": 208230, "monto_propuestas": 89312419441.25, "usuarios_originaron": 20437, "cantidad_creditos": 44267, "monto_originado_total": 3690877107.78, "usuarios_originaron_con_gestion": 19890, "monto_originado_con_gestion": 3533485276.46, "usuarios_originaron_con_cpc": 5091, "monto_originado_con_cpc": 905208890.13, "usuarios_originaron_vta": 2336, "monto_originado_vta": 492016514.48, "monto_total_vta": 304062239.22, "clientes_opt_in_vb": 100, "clientes_tel_post_opt_in": 12, "clientes_originados_tel_post_opt_in": 3, "monto_originados_tel_post_opt_in": 1234000.0, "monto_propuesta_tel_post_opt_in": 32648949.0, "periodo_str": "202603", "a\u00f1o": "2026", "mes": "03", "periodo_formato": "2026-03"}, {"pais": "MLA", "periodo": 202604, "agencia": "zolvex_mla", "criterio": "mla | consumer", "tipo_producto": "OTRO", "tipo_segmento": "OTRO", "clientes_asignados": 194926, "clientes_con_gestion": 141336, "clientes_con_cpc": 49036, "clientes_con_opt": 17, "gestiones_totales": 217861, "monto_propuestas": 214734196510.26, "usuarios_originaron": 26054, "cantidad_creditos": 42053, "monto_originado_total": 3936830003.23, "usuarios_originaron_con_gestion": 19692, "monto_originado_con_gestion": 3166853292.12, "usuarios_originaron_con_cpc": 6073, "monto_originado_con_cpc": 1111235372.49, "usuarios_originaron_vta": 4310, "monto_originado_vta": 943268261.73, "monto_total_vta": 858918021.8, "clientes_opt_in_vb": 7, "clientes_tel_post_opt_in": 0, "clientes_originados_tel_post_opt_in": 0, "monto_originados_tel_post_opt_in": 0.0, "monto_propuesta_tel_post_opt_in": 0.0, "periodo_str": "202604", "a\u00f1o": "2026", "mes": "04", "periodo_formato": "2026-04"}];
+        const datosCompletos = [{"pais": "MLA", "periodo": 202603, "agencia": "zolvex_mla", "criterio": "mla | consumer", "tipo_producto": "OTRO", "tipo_segmento": "OTRO", "clientes_asignados": 76928, "clientes_con_gestion": 76053, "clientes_con_cpc": 19864, "clientes_con_opt": 127, "gestiones_totales": 208230, "monto_propuestas": 89312419441.25, "usuarios_originaron": 20436, "cantidad_creditos": 44266, "monto_originado_total": 3690744108.78, "usuarios_originaron_con_gestion": 19889, "monto_originado_con_gestion": 3533352277.46, "usuarios_originaron_con_cpc": 5090, "monto_originado_con_cpc": 905075891.13, "usuarios_originaron_vta": 2335, "monto_originado_vta": 491883515.48, "monto_total_vta": 303929240.22, "clientes_opt_in_vb": 100, "clientes_tel_post_opt_in": 12, "clientes_originados_tel_post_opt_in": 3, "monto_originados_tel_post_opt_in": 1234000.0, "monto_propuesta_tel_post_opt_in": 32648949.0, "periodo_str": "202603", "a\u00f1o": "2026", "mes": "03", "periodo_formato": "2026-03"}, {"pais": "MLA", "periodo": 202604, "agencia": "zolvex_mla", "criterio": "mla | consumer", "tipo_producto": "OTRO", "tipo_segmento": "OTRO", "clientes_asignados": 194938, "clientes_con_gestion": 141339, "clientes_con_cpc": 49036, "clientes_con_opt": 17, "gestiones_totales": 217889, "monto_propuestas": 214769490679.87, "usuarios_originaron": 27678, "cantidad_creditos": 45407, "monto_originado_total": 4241955635.26, "usuarios_originaron_con_gestion": 20832, "monto_originado_con_gestion": 3411096678.79, "usuarios_originaron_con_cpc": 6446, "monto_originado_con_cpc": 1188448273.33, "usuarios_originaron_vta": 4762, "monto_originado_vta": 1028115670.79, "monto_total_vta": 935951499.44, "clientes_opt_in_vb": 7, "clientes_tel_post_opt_in": 0, "clientes_originados_tel_post_opt_in": 0, "monto_originados_tel_post_opt_in": 0.0, "monto_propuesta_tel_post_opt_in": 0.0, "periodo_str": "202604", "a\u00f1o": "2026", "mes": "04", "periodo_formato": "2026-04"}];
         const periodosDisponibles = [{"value": 202604, "label": "2026-04"}, {"value": 202603, "label": "2026-03"}];
         const criteriosDisponibles = [{"value": "mla | consumer", "label": "mla | consumer"}];
-        const datosGrafico = [{"periodo": 202603, "monto_originado_vta": 492016514.48, "monto_originado_total": 3690877107.78, "monto_atribuido_pct": 13.33}, {"periodo": 202604, "monto_originado_vta": 943268261.73, "monto_originado_total": 3936830003.23, "monto_atribuido_pct": 23.96}];
+        const datosGrafico = [{"periodo": 202603, "monto_originado_vta": 491883515.48, "monto_originado_total": 3690744108.78, "monto_atribuido_pct": 13.33}, {"periodo": 202604, "monto_originado_vta": 1028115670.79, "monto_originado_total": 4241955635.26, "monto_atribuido_pct": 24.24}];
         let periodoSeleccionado = 202604;
         let chartMontoAtribuido = null;
         let chartCoberturas = null;
+        let chartTicketPromedio = null;
 
         function mostrarDefiniciones() {
             document.getElementById('modalDefiniciones').classList.add('show');
@@ -892,6 +905,7 @@
             actualizarTablaVoiceBot();
             actualizarGraficoCoberturas();
             actualizarGraficoMontoAtribuido();
+            actualizarGraficoTicketPromedio();
         }
 
         function resetFiltros() {
@@ -1487,6 +1501,154 @@
             });
         }
 
+        function actualizarGraficoTicketPromedio() {
+            const datos = filtrarDatos();
+
+            // Agrupar por periodo
+            const datosPorPeriodo = {};
+            datos.forEach(d => {
+                if (!datosPorPeriodo[d.periodo]) {
+                    datosPorPeriodo[d.periodo] = {
+                        montoTotal: 0,
+                        usuariosTotal: 0,
+                        montoVTA: 0,
+                        usuariosVTA: 0
+                    };
+                }
+                datosPorPeriodo[d.periodo].montoTotal += d.monto_originado_total;
+                datosPorPeriodo[d.periodo].usuariosTotal += d.usuarios_originaron;
+                datosPorPeriodo[d.periodo].montoVTA += d.monto_originado_vta;
+                datosPorPeriodo[d.periodo].usuariosVTA += d.usuarios_originaron_vta;
+            });
+
+            const periodos = Object.keys(datosPorPeriodo).sort();
+            const labels = periodos.map(p => {
+                const label = periodosDisponibles.find(x => x.value === parseInt(p))?.label || p;
+                return label;
+            });
+
+            const ticketPromedioTotal = periodos.map(p => {
+                const datos = datosPorPeriodo[p];
+                return datos.usuariosTotal > 0 ? (datos.montoTotal / datos.usuariosTotal).toFixed(2) : 0;
+            });
+
+            const ticketPromedioVTA = periodos.map(p => {
+                const datos = datosPorPeriodo[p];
+                return datos.usuariosVTA > 0 ? (datos.montoVTA / datos.usuariosVTA).toFixed(2) : 0;
+            });
+
+            if (chartTicketPromedio) {
+                chartTicketPromedio.destroy();
+            }
+
+            const ctx = document.getElementById('chartTicketPromedio').getContext('2d');
+            chartTicketPromedio = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Ticket Promedio Total',
+                            data: ticketPromedioTotal,
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Ticket Promedio VTA',
+                            data: ticketPromedioVTA,
+                            borderColor: '#FF7A00',
+                            backgroundColor: 'rgba(255, 122, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 13,
+                                    weight: 'bold'
+                                },
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = parseFloat(context.parsed.y).toLocaleString('es-AR', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    });
+                                    return context.dataset.label + ': $' + value;
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 30
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString('es-AR');
+                                },
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [{
+                    afterDatasetsDraw: function(chart) {
+                        const ctx = chart.ctx;
+                        chart.data.datasets.forEach((dataset, i) => {
+                            const meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {
+                                meta.data.forEach((element, index) => {
+                                    ctx.fillStyle = dataset.borderColor;
+                                    ctx.font = 'bold 11px Arial';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'bottom';
+                                    const data = dataset.data[index];
+                                    const formattedValue = parseFloat(data).toLocaleString('es-AR', {
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 0
+                                    });
+                                    ctx.fillText('$' + formattedValue, element.x, element.y - 8);
+                                });
+                            }
+                        });
+                    }
+                }]
+            });
+        }
+
         inicializarFiltros();
         actualizarKPIs();
         actualizarTablaComparativa();
@@ -1494,6 +1656,7 @@
         actualizarTablaVoiceBot();
         actualizarGraficoCoberturas();
         actualizarGraficoMontoAtribuido();
+        actualizarGraficoTicketPromedio();
     </script>
 </body>
 </html>
